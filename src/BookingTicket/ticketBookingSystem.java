@@ -1,24 +1,11 @@
+package BookingTicket;
+
 import java.io.*;
 import java.util.*;
 
-//Ticket Booking System
+//BookingTicket.Ticket Booking System
 //
 
-class Train{
-    String trainName;
-
-    public Train(String trainName) {
-        this.trainName = trainName;
-    }
-
-    public String getTrainName() {
-        return trainName;
-    }
-
-    public void setTrainName(String trainName) {
-        this.trainName = trainName;
-    }
-}
 class Ticket {
     int ticketId;
     String passengerName;
@@ -91,8 +78,6 @@ class Ticket {
 
 
 class BookingSystem{
-    // Map to store train details
-    private Map<String, Train> trainInfo;
 
     //Map-> to store booked tickets
     private Map<Integer, Ticket> bookedT;
@@ -102,20 +87,10 @@ class BookingSystem{
 
     //constructor
     public BookingSystem(){
-        trainInfo=new HashMap<>();
         bookedT=new HashMap<>();
         nextId=1;
     }
 
-    public void addTrain(String trainName){
-        Train train = new Train(trainName);
-        trainInfo.put(trainName, train);
-    }
-
-    public Train getTrainDetails(String trainName){
-        return trainInfo.get(trainName);
-    }
-    //method->used to book a new ticket
     public void bookT(Ticket ticket){
         ticket.setTicketId(nextId);
         bookedT.put(nextId, ticket);
@@ -127,7 +102,7 @@ class BookingSystem{
         for(Map.Entry<Integer, Ticket> entry: bookedT.entrySet()){
             int ticketId= entry.getKey();
             Ticket ticket=entry.getValue();
-            System.out.println("Ticket Id: "+ticketId);
+            System.out.println("BookingTicket.Ticket Id: "+ticketId);
             System.out.println(ticket.toString());
             System.out.println();
         }
@@ -160,12 +135,12 @@ class BookingSystem{
                     String trainName =read[4];
                     double ticketPrice=Double.parseDouble(read[5]);
 
-                    System.out.println("Ticket Id: "+ticketId);
+                    System.out.println("BookingTicket.Ticket Id: "+ticketId);
                     System.out.println("Passenger Name: "+passengerName);
                     System.out.println("Source: "+source);
                     System.out.println("Destination: "+destination);
                     System.out.println("Train Name: "+trainName);
-                    System.out.println("Ticket Price: "+ticketPrice);
+                    System.out.println("BookingTicket.Ticket Price: "+ticketPrice);
 
                     System.out.println("All your details"+file);
                     System.out.println();
@@ -204,7 +179,6 @@ public class ticketBookingSystem {
                     String destination = sc.nextLine();
                     System.out.println("Enter train name");
                     String trainName=sc.nextLine();
-                    Train train=bookingSystem.getTrainDetails(trainName);
 
                     if(trainName==null){
                         System.out.println("Details Not found");
