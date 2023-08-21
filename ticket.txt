@@ -1,1 +1,1 @@
-1,shraddha,delhi,gurugram,200.0
+1,shraddha,gurugram,rewa,express,350.0

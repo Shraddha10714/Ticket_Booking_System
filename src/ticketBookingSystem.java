@@ -3,6 +3,22 @@ import java.util.*;
 
 //Ticket Booking System
 //
+
+class Train{
+    String trainName;
+
+    public Train(String trainName) {
+        this.trainName = trainName;
+    }
+
+    public String getTrainName() {
+        return trainName;
+    }
+
+    public void setTrainName(String trainName) {
+        this.trainName = trainName;
+    }
+}
 class Ticket {
     int ticketId;
     String passengerName;
@@ -10,13 +26,24 @@ class Ticket {
     String destination;
     double ticketPrice;
 
+    String trainName;
+
     //constructor
-    public Ticket(String passengerName, String source, String destination, double ticketPrice) {
+    public Ticket(String passengerName, String source, String destination, double ticketPrice, String trainName) {
         this.passengerName = passengerName;
         this.source = source;
         this.destination = destination;
         this.ticketPrice = ticketPrice;
+        this.trainName=trainName;
 
+    }
+
+    public String getTrainName() {
+        return trainName;
+    }
+
+    public void setTrainName(String trainName) {
+        this.trainName = trainName;
     }
 
     //getter and setter methods
@@ -61,18 +88,33 @@ class Ticket {
     }
 }
 
+
+
 class BookingSystem{
+    // Map to store train details
+    private Map<String, Train> trainInfo;
+
     //Map-> to store booked tickets
     private Map<Integer, Ticket> bookedT;
+
     //to keep track of the next available ticket id
     private int nextId;
 
     //constructor
     public BookingSystem(){
+        trainInfo=new HashMap<>();
         bookedT=new HashMap<>();
         nextId=1;
     }
 
+    public void addTrain(String trainName){
+        Train train = new Train(trainName);
+        trainInfo.put(trainName, train);
+    }
+
+    public Train getTrainDetails(String trainName){
+        return trainInfo.get(trainName);
+    }
     //method->used to book a new ticket
     public void bookT(Ticket ticket){
         ticket.setTicketId(nextId);
@@ -97,7 +139,7 @@ class BookingSystem{
                 int ticketId= entry.getKey();
                 Ticket ticket=entry.getValue();
                 w.println(ticketId+","+ticket.getPassengerName()+","+ticket.getSource()+","
-                +ticket.getDestination()+","+ticket.getTicketPrice());
+                +ticket.getDestination()+","+ticket.getTrainName()+","+ticket.getTicketPrice());
             }
             System.out.println("Details saved to: "+file);
         } catch (IOException e) {
@@ -110,21 +152,22 @@ class BookingSystem{
             String line;
             while((line = reader.readLine()) != null){
                 String[] read= line.split(",");
-                if(read.length==5){
+                if(read.length==6){
                     int ticketId= Integer.parseInt(read[0]);
                     String passengerName=read[1];
                     String source = read[2];
                     String destination=read[3];
-                    double ticketPrice=Double.parseDouble(read[4]);
+                    String trainName =read[4];
+                    double ticketPrice=Double.parseDouble(read[5]);
 
                     System.out.println("Ticket Id: "+ticketId);
                     System.out.println("Passenger Name: "+passengerName);
                     System.out.println("Source: "+source);
                     System.out.println("Destination: "+destination);
+                    System.out.println("Train Name: "+trainName);
                     System.out.println("Ticket Price: "+ticketPrice);
-                    System.out.println();
 
-                    System.out.println(file);
+                    System.out.println("All your details"+file);
                     System.out.println();
                 }
             }
@@ -143,41 +186,55 @@ public class ticketBookingSystem {
         while (true) {
             System.out.println("1. Book your ticket");
             System.out.println("2. See booked status");
-            System.out.println("3. See all your save data ");
-            System.out.println("4. Exit");
+            System.out.println("3. Save your data");
+            System.out.println("4. See all your save data ");
+            System.out.println("5. Exit");
             System.out.println("Enter any option");
             int option = sc.nextInt();
             sc.nextLine();
 
             switch (option) {
                 case 1:
+
                     System.out.println("Enter your name");
                     String Name = sc.nextLine();
                     System.out.println("Enter your source");
                     String source = sc.nextLine();
                     System.out.println("Enter your destination");
                     String destination = sc.nextLine();
-                    System.out.println("Enter ticketPrice");
-                    double ticketPrice = sc.nextDouble();
+                    System.out.println("Enter train name");
+                    String trainName=sc.nextLine();
+                    Train train=bookingSystem.getTrainDetails(trainName);
 
-                    Ticket newt=new Ticket(Name, source, destination, ticketPrice);
-                    newt.setPassengerName(Name);
-                    newt.setSource(source);
-                    newt.setDestination(destination);
-                    newt.setTicketPrice(ticketPrice);
+                    if(trainName==null){
+                        System.out.println("Details Not found");
+                    }else{
+                        System.out.println("Enter ticketPrice");
+                        double ticketPrice = sc.nextDouble();
+                        Ticket newt=new Ticket(Name, source, destination, ticketPrice, trainName);
+                        newt.setPassengerName(Name);
+                        newt.setSource(source);
+                        newt.setDestination(destination);
+                        newt.setTicketPrice(ticketPrice);
+                        newt.setTrainName(trainName);
 
-                    bookingSystem.bookT(newt);
-                    System.out.println("Successfully Booked");
+                        bookingSystem.bookT(newt);
+                        System.out.println("Successfully Booked");
+                    }
                     break;
+
                 case 2:
                     bookingSystem.displayTickets();
                     break;
                 case 3:
-                    bookingSystem.readfile("ticket.txt");
                     bookingSystem.saveIntoFile("ticket.txt");
                     System.out.println();
                     break;
                 case 4:
+                    bookingSystem.readfile("ticket.txt");
+                    System.out.println();
+                    break;
+                case 5:
                     System.out.println("Exit..");
                     sc.close();
                     System.exit(0);
