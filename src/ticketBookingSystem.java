@@ -60,19 +60,25 @@ class Ticket {
 }
 
 class BookingSystem{
+    //Map-> to store booked tickets
     private Map<Integer, Ticket> bookedT;
+    //to keep track of the next available ticket id
     private int nextId;
 
+    //constructor
     public BookingSystem(){
         bookedT=new HashMap<>();
         nextId=1;
     }
 
+    //method->used to book a new ticket
     public void bookT(Ticket ticket){
         ticket.setTicketId(nextId);
         bookedT.put(nextId, ticket);
         nextId++;
     }
+
+    //this method displays all booked ticket details
     public void displayTickets(){
         for(Map.Entry<Integer, Ticket> entry: bookedT.entrySet()){
             int ticketId= entry.getKey();
@@ -82,8 +88,7 @@ class BookingSystem{
             System.out.println();
         }
     }
-
-
+    //method saves booked ticket into a file using PrintWriter
     public void saveIntoFile(String file){
         try(PrintWriter w = new PrintWriter(new FileWriter(file))){
             for(Map.Entry<Integer, Ticket> entry: bookedT.entrySet()){
@@ -97,7 +102,7 @@ class BookingSystem{
             e.printStackTrace();
         }
     }
-
+    //reads and display ticket details from a file using BufferedReader
     public void readfile(String file){
         try(BufferedReader reader=new BufferedReader(new FileReader(file))){
             String line;
