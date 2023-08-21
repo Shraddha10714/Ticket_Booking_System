@@ -10,6 +10,7 @@ class Ticket {
     String destination;
     double ticketPrice;
 
+    //constructor
     public Ticket(String passengerName, String source, String destination, double ticketPrice) {
         this.passengerName = passengerName;
         this.source = source;
@@ -18,6 +19,7 @@ class Ticket {
 
     }
 
+    //getter and setter methods
     public int getTicketId() {
         return ticketId;
     }
