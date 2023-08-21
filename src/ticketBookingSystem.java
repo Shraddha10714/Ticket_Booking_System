@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-//Ticket Booking System for book tickets
-
+//Ticket Booking System
+//
 class Ticket {
     int ticketId;
     String passengerName;
