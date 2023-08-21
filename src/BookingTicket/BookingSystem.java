@@ -46,8 +46,8 @@ class BookingSystem implements TicketServices{
             for (Map.Entry<Integer, Ticket> entry : bookedT.entrySet()) {
                 int ticketId = entry.getKey();
                 Ticket ticket = entry.getValue();
-                w.println(ticketId + "," + ticket.getPassengerName() + "," + ticket.getSource() + ","
-                        + ticket.getDestination() + "," + ticket.getTrainName() + "," + ticket.getTicketPrice());
+                w.println(ticketId + ", " + ticket.getPassengerName() + ", " + ticket.getSource() + ", "
+                        + ticket.getDestination() + ", " + ticket.getTrainName() + ", " + ticket.getTicketPrice());
             }
             System.out.println("Details saved to: " + file);
         } catch (IOException e) {
