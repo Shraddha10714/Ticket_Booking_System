@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-//interface//
+//interface
 interface TicketServices{
     void bookT(Ticket ticket);
     void displayTickets();
